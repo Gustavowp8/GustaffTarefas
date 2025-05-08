@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GustaffTarefas.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GustaffTarefas.Data
@@ -6,6 +7,6 @@ namespace GustaffTarefas.Data
     public class Context : IdentityDbContext
     {
         public Context(DbContextOptions<Context>options) :base(options) { }
-        // public DbSet<NotaModel> Notas { get; set; }
+        public DbSet<TarefaModel> Tarefas { get; set; }
     }
 }
