@@ -1,0 +1,39 @@
+﻿@model TarefaModel
+
+@{
+    ViewData["Title"] = "Adiciona Tarefa";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Adiciona" method="post">
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div>
+        <label asp-for="TarefaNome"></label><br />
+        <input asp-for="TarefaNome" />
+        <span asp-validation-for="TarefaNome"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Vencimento"></label><br />
+        <input asp-for="Vencimento" type="date" />
+        <span asp-validation-for="Vencimento"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Descricao"></label><br />
+        <input asp-for="Descricao" />
+        <span asp-validation-for="Descricao"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Prioridade"></label><br />
+        <select asp-for="Prioridade" asp-items="Html.GetEnumSelectList<TarefaModel.PrioridadeEnum>()"></select>
+        <span asp-validation-for="Prioridade"></span>
+    </div><br />
+
+    <button type="submit">ADICIONA TAREFA</button>
+
+</form>

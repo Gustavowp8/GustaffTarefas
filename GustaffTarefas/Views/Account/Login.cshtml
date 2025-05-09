@@ -1,1 +1,35 @@
-﻿<h1>Login</h1>
+﻿@model LoginViewModel
+
+@{
+    ViewData["Title"] = "Faça o login";
+    Layout = null;
+}
+
+<div>
+    <h1>@ViewData["Title"]</h1>
+</div>
+
+<form method="post">
+
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div><br />
+
+    <div>
+        <input asp-for="RememberMe" />
+        @Html.DisplayNameFor(g => g.RememberMe)
+    </div><br />
+
+    <button type="submit">ENTRAR</button>
+
+</form> <br />
+
+<a asp-action="Register">Criar conta</a>

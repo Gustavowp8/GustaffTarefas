@@ -1,1 +1,38 @@
-﻿<h1>Cadastro de usuario</h1>
+﻿@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Criar conta";
+    Layout = null;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+
+    <div>
+        <label asp-for="UserName"></label><br />
+        <input asp-for="UserName" />
+        <span asp-validation-for="UserName"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div><br />
+
+    <div>
+        <label asp-for="ConfirmPassword"></label><br />
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword"></span>
+    </div><br />
+
+    <button type="submit">CRIAR CONTA</button>
+
+</form>
