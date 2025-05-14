@@ -1,11 +1,35 @@
-﻿@{
+﻿@model IEnumerable<TarefaModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Bem-vindo</h1>
     <p>Este site esta em fase de construção, caso você encotre um erro, porfavor informe para a gente.</p>
-    <a asp-action="Adiciona">Adiciona Tarefa</a>
+    <a asp-action="Adiciona">Adiciona nova tarefa</a>
 </div>
 
-<div asp-validation-summary="All" class="text-danger"></div>
+<div asp-validation-summary="All" class="text-danger"></div> <hr /> <br />
+
+@if (Model.Count() > 0)
+{
+    @foreach (var tarefa in Model)
+    {
+       
+        <div class="container">
+            <div class="card">
+                    <div class="card-content">
+                            <h3>@tarefa.TarefaNome</h3>
+                        <p>@tarefa.Descricao</p>
+                            <a asp-action="Edita" asp-route-id="@tarefa.TarefaId">Saiba Mais</a>
+                    </div>
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    <p>Lita de tarefas vazia</p>
+}

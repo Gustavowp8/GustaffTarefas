@@ -20,3 +20,72 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/*Esta e a area dos cards */
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha em telas menores */
+    gap: 20px; /* Espaçamento entre os cards */
+    justify-content: center; /* Centraliza os cards horizontalmente */
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Garante que a imagem e o conteúdo fiquem dentro das bordas */
+    width: 300px; /* Largura base do card */
+    flex-grow: 1; /* Permite que o card cresça para preencher o espaço disponível */
+    margin: 10px;
+}
+
+    .card img {
+        width: 100%;
+        display: block; /* Remove espaço extra abaixo da imagem */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+
+.card-content {
+    padding: 15px;
+}
+
+    .card-content h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .card-content p {
+        color: #666;
+        font-size: 0.9em;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .card-content a {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 8px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.9em;
+    }
+
+        .card-content a:hover {
+            background-color: #0056b3;
+        }
+
+/* Media query para telas menores (ex: tablets) */
+@media (max-width: 768px) {
+    .card {
+        width: calc(50% - 10px); /* Dois cards por linha */
+    }
+}
+
+/* Media query para telas ainda menores (ex: smartphones) */
+@media (max-width: 480px) {
+    .card {
+        width: 100%; /* Um card por linha */
+    }
+}

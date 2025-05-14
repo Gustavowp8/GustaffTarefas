@@ -1,0 +1,37 @@
+﻿@model GustaffTarefas.Models.TarefaModel
+
+<h2>Editar Tarefa</h2>
+
+<form asp-action="Edita" method="post">
+    <input type="hidden" asp-for="TarefaId" />
+
+    <div>
+        <label asp-for="TarefaNome"></label>
+        <input asp-for="TarefaNome" />
+        <span asp-validation-for="TarefaNome"></span>
+    </div>
+
+    <div>
+        <label asp-for="Descricao"></label>
+        <textarea asp-for="Descricao"></textarea>
+        <span asp-validation-for="Descricao"></span>
+    </div>
+
+    <div>
+        <label asp-for="Vencimento"></label>
+        <input asp-for="Vencimento" type="date" />
+        <span asp-validation-for="Vencimento"></span>
+    </div>
+
+    <div>
+        <label asp-for="Prioridade"></label>
+        <select asp-for="Prioridade" asp-items="Html.GetEnumSelectList<TarefaModel.PrioridadeEnum>()"></select>
+    </div>
+
+    <div>
+        <label asp-for="Feito"></label>
+        <input asp-for="Feito" type="checkbox" />
+    </div>
+
+    <button type="submit">Salvar</button>
+</form>

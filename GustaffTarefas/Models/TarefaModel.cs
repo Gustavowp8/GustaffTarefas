@@ -29,9 +29,9 @@ namespace GustaffTarefas.Models
 
         public enum PrioridadeEnum
         {
-            Baixa,
-            Media,
-            Alta
+            Baixa, //0
+            Media, //1
+            Alta //2
         }
 
         public PrioridadeEnum Prioridade { get; set; }
