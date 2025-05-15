@@ -21,71 +21,85 @@ body {
   margin-bottom: 60px;
 }
 
-/*Esta e a area dos cards */
-.container {
+/* Felx */
+
+.flex {
     display: flex;
-    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha em telas menores */
-    gap: 20px; /* Espaçamento entre os cards */
-    justify-content: center; /* Centraliza os cards horizontalmente */
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
-.card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Garante que a imagem e o conteúdo fiquem dentro das bordas */
-    width: 300px; /* Largura base do card */
-    flex-grow: 1; /* Permite que o card cresça para preencher o espaço disponível */
-    margin: 10px;
-}
-
-    .card img {
-        width: 100%;
-        display: block; /* Remove espaço extra abaixo da imagem */
-        height: auto; /* Mantém a proporção da imagem */
+    .flex > div {
+        flex: 1 1 250px;
+        background: #1e90ff; /* azul mais moderno */
+        color: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+        max-width: 300px;
     }
 
-.card-content {
-    padding: 15px;
-}
-
-    .card-content h3 {
-        margin-top: 0;
-        margin-bottom: 10px;
-        color: #333;
+    .flex > .prioridade-alta {
+        background-color: #1f2633 !important;
+        color: wheat;
     }
 
-    .card-content p {
-        color: #666;
-        font-size: 0.9em;
-        line-height: 1.5;
-        margin-bottom: 15px;
+    .flex > .prioridade-media {
+        background-color: #7229d9 !important;
+        color: wheat;
     }
 
-    .card-content a {
-        display: inline-block;
-        background-color: #007bff;
-        color: #fff;
-        padding: 8px 15px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 0.9em;
+    .flex > .prioridade-baixa {
+        background-color: #e052f2 !important;
+        color: wheat;
     }
 
-        .card-content a:hover {
-            background-color: #0056b3;
+        .flex > div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
-/* Media query para telas menores (ex: tablets) */
-@media (max-width: 768px) {
-    .card {
-        width: calc(50% - 10px); /* Dois cards por linha */
+    .flex a {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        color: wheat;
+    }
+
+    .flex h4 {
+        margin-top: 0;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .flex p {
+        margin: 8px 0;
+    }
+
+.atrasado {
+    animation: fundoPiscar 1s infinite;
+    font-weight: bold;
+    color: white;
+}
+
+@keyframes fundoPiscar {
+    0%, 100% {
+        background-color: #1e90ff; /* azul normal */
+    }
+
+    50% {
+        background-color: red;
     }
 }
 
-/* Media query para telas ainda menores (ex: smartphones) */
-@media (max-width: 480px) {
-    .card {
-        width: 100%; /* Um card por linha */
-    }
+/* fluente */
+fluent-dialog::part(control) {
+    border-radius: 12px;
+    padding: 20px;
+    background: #f8f9fa;
 }

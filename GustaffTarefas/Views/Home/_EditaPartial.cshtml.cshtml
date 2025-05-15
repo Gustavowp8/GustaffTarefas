@@ -1,0 +1,50 @@
+﻿@model TarefaModel
+@{
+    Layout = null;
+}
+
+<form asp-action="Edita" method="post" id="formEdita">
+    <input type="hidden" asp-for="TarefaId" />
+
+    <label>Nome</label>
+    <input asp-for="TarefaNome" />
+
+    <label>Descrição</label>
+    <textarea asp-for="Descricao"></textarea>
+
+    <label>Vencimento</label>
+    <input asp-for="Vencimento" type="date" />
+
+    <label>Prioridade</label>
+    <select asp-for="Prioridade" asp-items="Html.GetEnumSelectList<TarefaModel.PrioridadeEnum>()"></select>
+
+    <label>Feito</label>
+    <input asp-for="Feito" type="checkbox" />
+
+    <button type="submit">Salvar</button>
+</form>
+
+<script>
+    document.getElementById('formEdita').addEventListener('submit', function (event) {
+        event.preventDefault();
+        var form = this;
+        var data = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            if (response.redirected) {
+                // Fecha modal e atualiza página
+                window.parent.document.getElementById('editDialog').hide();
+                window.parent.location.reload();
+            } else {
+                return response.text().then(html => {
+                    form.outerHTML = html; // Atualiza formulário com possíveis erros
+                });
+            }
+        });
+    });
+</script>

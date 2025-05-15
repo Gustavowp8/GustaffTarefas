@@ -66,24 +66,24 @@ namespace GustaffTarefas.Controllers
             var tarefa = db.Tarefas.FirstOrDefault(t => t.TarefaId == id);
 
             if (tarefa == null)
-            {
                 return NotFound();
-            }
 
-            // Garante que o usuário só edita suas próprias tarefas
             if (tarefa.UserId != _userManager.GetUserId(User))
-            {
                 return Unauthorized();
-            }
 
-            return View(tarefa);
+            return View(tarefa); // <- volta a usar a view normal
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Edita(TarefaModel model)
         {
             if (!ModelState.IsValid)
             {
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("~/Views/Home/_EditaPartial.cshtml", model); // Retorna partial com erros
+                }
                 return View(model);
             }
 
@@ -96,13 +96,11 @@ namespace GustaffTarefas.Controllers
                     return NotFound();
                 }
 
-                // Garante que o usuário só edita suas próprias tarefas
                 if (tarefaNoBanco.UserId != _userManager.GetUserId(User))
                 {
                     return Unauthorized();
                 }
 
-                // Atualiza os campos
                 tarefaNoBanco.TarefaNome = model.TarefaNome;
                 tarefaNoBanco.Descricao = model.Descricao;
                 tarefaNoBanco.Vencimento = model.Vencimento;
@@ -110,14 +108,29 @@ namespace GustaffTarefas.Controllers
                 tarefaNoBanco.Feito = model.Feito;
 
                 await db.SaveChangesAsync();
+
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    // Para fetch AJAX: responde com redirect para indicar sucesso
+                    return RedirectToAction("Index");
+                }
+
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                // Você pode logar o erro aqui se quiser
                 ModelState.AddModelError("", "Erro ao editar a tarefa.");
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                {
+                    return PartialView("_EditaPartial", model);
+                }
                 return View(model);
             }
+        }
+
+        public IActionResult TestePartial()
+        {
+            return PartialView("~/Views/Home/_EditaPartial.cshtml", new TarefaModel());
         }
 
         public IActionResult Privacy()

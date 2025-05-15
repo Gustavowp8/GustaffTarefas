@@ -2,36 +2,56 @@
 
 <h2>Editar Tarefa</h2>
 
-<form asp-action="Edita" method="post">
-    <input type="hidden" asp-for="TarefaId" />
+<form asp-action="Edita" method="post" style="max-width: 600px; margin: auto;">
 
-    <div>
-        <label asp-for="TarefaNome"></label>
-        <input asp-for="TarefaNome" />
-        <span asp-validation-for="TarefaNome"></span>
+    <div style="margin-bottom: 16px;">
+        <label asp-for="TarefaNome"></label><br />
+        <fluent-text-field id="TarefaNome"
+                           name="TarefaNome"
+                           value="@Model.TarefaNome"
+                           style="width: 100%;"></fluent-text-field>
+        <span asp-validation-for="TarefaNome" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="Descricao"></label>
-        <textarea asp-for="Descricao"></textarea>
-        <span asp-validation-for="Descricao"></span>
+    <div style="margin-bottom: 16px;">
+        <label asp-for="Descricao"></label><br />
+        <fluent-text-area id="Descricao"
+                          name="Descricao"
+                          value="@Model.Descricao"
+                          style="width: 100%; height: 120px;"></fluent-text-area>
+        <span asp-validation-for="Descricao" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="Vencimento"></label>
-        <input asp-for="Vencimento" type="date" />
-        <span asp-validation-for="Vencimento"></span>
+    <div style="margin-bottom: 16px;">
+        <label asp-for="Vencimento"></label><br />
+        <fluent-text-field type="date"
+                           id="Vencimento"
+                           name="Vencimento"
+                           value="@Model.Vencimento.ToString("yyyy-MM-dd")"
+                           style="width: 100%;"></fluent-text-field>
+        <span asp-validation-for="Vencimento" class="text-danger"></span>
     </div>
 
-    <div>
-        <label asp-for="Prioridade"></label>
-        <select asp-for="Prioridade" asp-items="Html.GetEnumSelectList<TarefaModel.PrioridadeEnum>()"></select>
+    <div style="margin-bottom: 16px;">
+        <label asp-for="Prioridade"></label><br />
+        <fluent-select id="Prioridade" name="Prioridade" style="width: 100%;">
+            @foreach (var prioridade in Html.GetEnumSelectList<TarefaModel.PrioridadeEnum>())
+            {
+                <fluent-option value="@prioridade.Value" selected="@(prioridade.Value.Equals(Model.Prioridade.ToString()) ? "selected" : null)">
+                    @prioridade.Text
+                </fluent-option>
+            }
+        </fluent-select>
     </div>
 
-    <div>
-        <label asp-for="Feito"></label>
-        <input asp-for="Feito" type="checkbox" />
+    <div style="margin-bottom: 16px;">
+        <label asp-for="Feito"></label><br />
+        <fluent-switch id="Feito" name="Feito" checked="@(Model.Feito ? "checked" : null)">
+            Concluído
+        </fluent-switch>
     </div>
 
-    <button type="submit">Salvar</button>
+    <fluent-button appearance="accent" type="submit" style="width: 100%; margin-top: 20px;">
+        Salvar
+    </fluent-button>
 </form>

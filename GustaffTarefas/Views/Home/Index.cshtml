@@ -10,26 +10,74 @@
     <a asp-action="Adiciona">Adiciona nova tarefa</a>
 </div>
 
-<div asp-validation-summary="All" class="text-danger"></div> <hr /> <br />
+<div asp-validation-summary="All" class="text-danger"></div>
+<hr />
+<br />
 
 @if (Model.Count() > 0)
 {
-    @foreach (var tarefa in Model)
-    {
-       
-        <div class="container">
-            <div class="card">
-                    <div class="card-content">
-                            <h3>@tarefa.TarefaNome</h3>
-                        <p>@tarefa.Descricao</p>
-                            <a asp-action="Edita" asp-route-id="@tarefa.TarefaId">Saiba Mais</a>
-                    </div>
-            </div>
-        </div>
+    var tarefasOrdenadas = Model.OrderByDescending(t => t.Prioridade).ThenBy(t => t.Vencimento).ToList();
 
-    }
+    <div class="flex">
+        @foreach (var tarefa in tarefasOrdenadas)
+        {
+            var isAtrasado = tarefa.Vencimento.Date < DateTime.Now.Date;
+
+            var prioridadeClass = tarefa.Prioridade switch
+            {
+                TarefaModel.PrioridadeEnum.Alta => "prioridade-alta",
+                TarefaModel.PrioridadeEnum.Media => "prioridade-media",
+                TarefaModel.PrioridadeEnum.Baixa => "prioridade-baixa",
+                _ => ""
+            };
+
+            var cardClass = isAtrasado ? "atrasado" : prioridadeClass;
+
+            <fluent-card class="@cardClass" style="width: 280px; padding: 20px; margin: 10px;">
+                <h4>
+                    @(tarefa.TarefaNome.Length > 15
+                        ? tarefa.TarefaNome.Substring(0, 15) + "..."
+                        : tarefa.TarefaNome)
+                </h4>
+
+                <p>
+                    @(tarefa.Descricao != null && tarefa.Descricao.Length > 30
+                        ? tarefa.Descricao.Substring(0, 30) + "..."
+                        : tarefa.Descricao)
+                </p>
+
+                <p>@tarefa.Vencimento.ToString("dd/MM/yyyy")</p>
+
+                <a asp-action="Edita" asp-route-id="@tarefa.TarefaId">
+                    <fluent-button appearance="accent" style="width: 100%; margin-top: 10px;">
+                        Editar
+                    </fluent-button>
+                </a>
+
+            </fluent-card>
+        }
+    </div>
 }
 else
 {
-    <p>Lita de tarefas vazia</p>
+    <p>Lista de tarefas vazia</p>
 }
+
+
+<!-- Modal -->
+<fluent-dialog id="editDialog" modal hidden style="width: 600px; height: 600px;">
+    <iframe id="editFrame" style="width: 100%; height: 100%; border: none;"></iframe>
+</fluent-dialog>
+
+<script>
+    const dialog = document.getElementById('editDialog');
+    const iframe = document.getElementById('editFrame');
+
+    // Garante que o dialog comece fechado
+    dialog.hide();
+
+    function openEditDialog(tarefaId) {
+        iframe.src = `/Home/Edita/${tarefaId}`;
+        dialog.show();
+    }
+</script>
