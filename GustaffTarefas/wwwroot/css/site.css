@@ -1,35 +1,59 @@
-html {
-  font-size: 14px;
+body{
+    margin: 0px;
+    padding:0px;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+ul {
+    margin: 0px;
+    padding: 0px;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+#menu a{
+    color: black;
+    text-decoration: none;
+    font-family: sans-serif;
+    display: block;
+    padding: .5rem;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+#menu a:hover{
+    background: rgba(0, 0, 0, .05);
 }
 
-body {
-  margin-bottom: 60px;
+#logo{
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
 }
 
-/* Felx */
+#header{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #e7e7e7;
+}
 
+#menu{
+    box-sizing: border-box;
+    display:flex;
+    padding: 1rem;
+    list-style: none;
+    gap: .5rem;
+}
+
+#btnMobile{
+    display: none;
+}
+
+/* Flex */
 .flex {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
-    max-width: 1500px;
-    margin: 0 auto;
+    ;
     padding: 20px;
 }
 
@@ -59,10 +83,10 @@ body {
         color: wheat;
     }
 
-        .flex > div:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
+    .flex > div:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
 
     .flex a {
         text-decoration: none;
@@ -97,9 +121,105 @@ body {
     }
 }
 
-/* fluente */
-fluent-dialog::part(control) {
-    border-radius: 12px;
+/* Fluent UI */
+fluent-app-bar {
+    background-color: #0078d4;
+    color: white;
+    padding: 10px;
+}
+
+fluent-nav {
+    background-color: #f3f3f3;
+    padding: 10px;
+}
+
+fluent-nav-item {
+    margin: 10px 0;
+}
+
+    fluent-nav-item a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+        fluent-nav-item a:hover {
+            text-decoration: underline;
+        }
+
+fluent-split-view-pane {
     padding: 20px;
-    background: #f8f9fa;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media(max-width: 600px){
+
+    #menu {
+        display: block;
+        position: absolute;
+        width: 100%;
+        top: 70px;
+        right: 0px;
+        background: #e7e7e7;
+        height: 0px;
+        visibility: hidden;
+        overflow-y: hidden;
+        transition: .6s;
+        z-index: 1000;
+    }
+
+    #nav.active #menu {
+        height: calc(100vh - 70px);
+        visibility: visible;
+        overflow-y: auto;
+    }
+
+    #menu a{
+        padding: 1rem 0;
+        margin: 0 1rem;
+        border-bottom: 2px solid rgba(0, 0, 0, .05);
+    }
+
+    #btnMobile {
+        display: flex;
+        padding: .5rem 1rem;
+        font-size: 1rem;
+        border: none;
+        background: none;
+        cursor: pointer;
+        gap: .5rem;
+    }
+
+    #hamburger{
+        display: block;
+        border-top: 2px solid;
+        width: 20px;
+    }
+
+    #hamburger::after, #hamburger::before{
+        content:'';
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: blue;
+        margin-top: 5px;
+        background: currentColor;
+        transition: .3s;
+        position: relative;
+    }
+
+    #nav.active #hamburger {
+        border-top-color: transparent;
+
+    }
+
+    #nav.active #hamburger::after{
+        transform: rotate(-135deg);
+        top: -7px;
+
+    }
+
+    #nav.active #hamburger::before{
+        transform: rotate(135deg);
+    }
 }
